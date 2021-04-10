@@ -3,6 +3,7 @@ package com.weloveourbody.bmi_calc;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -21,11 +22,18 @@ public class MainActivity extends AppCompatActivity {
 
         //Connection between XML and JAVA
         TextView result = findViewById(R.id.text_view_result);
-        Button calculate = findViewById(R.id.button_calculate);
+        Button calculateButton = findViewById(R.id.button_calculate);
         EditText ageEditText = findViewById(R.id.edit_text_age);
         EditText weightEditText = findViewById(R.id.edit_text_weight);
         EditText heightEditText = findViewById(R.id.edit_text_height);
         RadioButton femaleButton = findViewById(R.id.radio_button_female);
         RadioButton maleButton = findViewById(R.id.radio_button_male);
+
+        calculateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"fuck you",Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }
