@@ -24,12 +24,14 @@
         android:orientation="horizontal">
 
         <RadioButton
+            android:id="@+id/radio_button_female"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Female"
             android:textColor="@color/black" />
 
         <RadioButton
+            android:id="@+id/radio_button_male"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="male"
@@ -38,6 +40,7 @@
     </RadioGroup>
 
     <EditText
+        android:id="@+id/edit_text_age"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
@@ -53,6 +56,7 @@
         android:orientation="horizontal">
 
         <EditText
+            android:id="@+id/edit_text_height"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Height"
@@ -63,6 +67,7 @@
         </EditText>
 
         <EditText
+            android:id="@+id/edit_text_weight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Weight"
@@ -73,14 +78,16 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/button_calculate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:text="Calculate" />
 
     <TextView
+        android:id="@+id/text_view_result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="YOU ARE DOING FINE"
-        android:textColorHint="@color/black"></TextView>
+        android:text="YOU ARE DOING FINE"
+        android:textColor="@color/black"></TextView>
 </LinearLayout>
