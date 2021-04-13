@@ -10,6 +10,8 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
+
 public class MainActivity extends AppCompatActivity
 {
     //Fields
@@ -52,11 +54,27 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void calculateBmi() {
-        String age = ageEditText.getText().toString();
-        String weight = weightEditText.getText().toString();
-        String height = heightEditText.getText().toString();
-        double resultBmi;
+        String ageText = ageEditText.getText().toString();
+        String weightText = weightEditText.getText().toString();
+        String heightText = heightEditText.getText().toString();
 
+        int age = Integer.parseInt(ageText);
+        int weight = Integer.parseInt(weightText);
+        double height = Integer.parseInt(heightText)/100.0;
+        double bmi = weight / (height * height);
+        DecimalFormat myDecimalFormat = new DecimalFormat("0.00");
+        String bmiTextResult = myDecimalFormat.format(bmi);
+        if(bmi<18.5)
+            result.setText( bmiTextResult +" "+ "You are underweight");
+        else if(bmi>=18.5 && bmi<=25)
+            result.setText(bmiTextResult +" " +"You are on a proper weight");
+        else if(bmi>25 && bmi<=29.9)
+            result.setText(bmiTextResult + " "+"You are on an over-weight");
+        else if(bmi>=30 && bmi<=40)
+            result.setText(bmiTextResult +" "+ "you are on an obesity");
+        else
+            result.setText(bmiTextResult +" "+ "you are on an acute obesity");
     }
+
 
 }

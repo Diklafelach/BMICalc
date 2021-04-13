@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_gravity="center"
+        android:layout_margin="10dp"
         android:fontFamily="monospace"
         android:text="BMI Calculator"
         android:textAlignment="center"
@@ -90,4 +91,9 @@
         android:layout_height="wrap_content"
         android:text="YOU ARE DOING FINE"
         android:textColor="@color/black"></TextView>
+
+<ImageView
+    android:src="@drawable/bmi_scale"
+    android:layout_width="350dp"
+    android:layout_height="100dp"/>
 </LinearLayout>
