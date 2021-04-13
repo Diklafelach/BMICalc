@@ -64,16 +64,18 @@ public class MainActivity extends AppCompatActivity
         double bmi = weight / (height * height);
         DecimalFormat myDecimalFormat = new DecimalFormat("0.00");
         String bmiTextResult = myDecimalFormat.format(bmi);
+        String fullResultString;
         if(bmi<18.5)
-            result.setText( bmiTextResult +" "+ "You are underweight");
+            fullResultString= bmiTextResult +" "+ "You are underweight";
         else if(bmi>=18.5 && bmi<=25)
-            result.setText(bmiTextResult +" " +"You are on a proper weight");
+            fullResultString=bmiTextResult +" " +"You are on a proper weight";
         else if(bmi>25 && bmi<=29.9)
-            result.setText(bmiTextResult + " "+"You are on an over-weight");
+            fullResultString=bmiTextResult + " "+"You are on an over-weight";
         else if(bmi>=30 && bmi<=40)
-            result.setText(bmiTextResult +" "+ "you are on an obesity");
+            fullResultString=bmiTextResult +" "+ "you are on an obesity";
         else
-            result.setText(bmiTextResult +" "+ "you are on an acute obesity");
+            fullResultString=bmiTextResult +" "+ "you are on an acute obesity";
+        result.setText(fullResultString);
     }
 
 
