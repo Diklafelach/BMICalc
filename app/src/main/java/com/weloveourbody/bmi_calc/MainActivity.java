@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity
     EditText heightEditText;
     RadioButton femaleButton;
     RadioButton maleButton;
+    double bmi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -29,7 +30,14 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         findViews();
-        setupButtonClickListener();
+        mustSelectFemaleOrMale();
+    }
+
+    private void mustSelectFemaleOrMale() {
+        if(femaleButton.isChecked()||maleButton.isChecked())
+            setupButtonClickListener();
+        else
+            Toast.makeText(getApplicationContext(),"Please select your gender",Toast.LENGTH_LONG).show();
     }
 
 
@@ -47,8 +55,10 @@ public class MainActivity extends AppCompatActivity
     private void setupButtonClickListener() {
         calculateButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 calculateBmi();
+                displayResult();
             }
         });
     }
@@ -61,7 +71,11 @@ public class MainActivity extends AppCompatActivity
         int age = Integer.parseInt(ageText);
         int weight = Integer.parseInt(weightText);
         double height = Integer.parseInt(heightText)/100.0;
-        double bmi = weight / (height * height);
+        bmi = weight / (height * height);
+
+    }
+    private void displayResult()
+    {
         DecimalFormat myDecimalFormat = new DecimalFormat("0.00");
         String bmiTextResult = myDecimalFormat.format(bmi);
         String fullResultString;
@@ -77,6 +91,5 @@ public class MainActivity extends AppCompatActivity
             fullResultString=bmiTextResult +" "+ "you are on an acute obesity";
         result.setText(fullResultString);
     }
-
 
 }
