@@ -22,7 +22,6 @@ public class MainActivity extends AppCompatActivity
     EditText heightEditText;
     RadioButton femaleButton;
     RadioButton maleButton;
-    double bmi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -57,13 +56,13 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                calculateBmi();
-                displayResult();
+               double bmiResult =  calculateBmi();
+                displayResult(bmiResult);
             }
         });
     }
 
-    private void calculateBmi() {
+    private double calculateBmi() {
         String ageText = ageEditText.getText().toString();
         String weightText = weightEditText.getText().toString();
         String heightText = heightEditText.getText().toString();
@@ -71,10 +70,10 @@ public class MainActivity extends AppCompatActivity
         int age = Integer.parseInt(ageText);
         int weight = Integer.parseInt(weightText);
         double height = Integer.parseInt(heightText)/100.0;
-        bmi = weight / (height * height);
+        return weight / (height * height);
 
     }
-    private void displayResult()
+    private void displayResult(double bmi)
     {
         DecimalFormat myDecimalFormat = new DecimalFormat("0.00");
         String bmiTextResult = myDecimalFormat.format(bmi);
