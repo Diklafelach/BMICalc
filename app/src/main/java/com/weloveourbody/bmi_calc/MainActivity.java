@@ -29,16 +29,10 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         findViews();
-        mustSelectFemaleOrMale();
-    }
+        setupButtonClickListener();
 
-    private void mustSelectFemaleOrMale() {
-        if(femaleButton.isChecked()||maleButton.isChecked())
-            setupButtonClickListener();
-        else
-            Toast.makeText(getApplicationContext(),"Please select your gender",Toast.LENGTH_LONG).show();
     }
-
+    
 
     private  void findViews()
     {
