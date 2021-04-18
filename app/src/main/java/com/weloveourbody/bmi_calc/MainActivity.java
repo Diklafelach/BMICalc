@@ -1,7 +1,6 @@
 package com.weloveourbody.bmi_calc;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,6 +8,8 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.text.DecimalFormat;
 
@@ -22,7 +23,7 @@ public class MainActivity extends AppCompatActivity
     EditText heightEditText;
     RadioButton femaleButton;
     RadioButton maleButton;
-
+    Button nextPageButton;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -44,17 +45,30 @@ public class MainActivity extends AppCompatActivity
         heightEditText = findViewById(R.id.edit_text_height);
         femaleButton = findViewById(R.id.radio_button_female);
         maleButton = findViewById(R.id.radio_button_male);
+        nextPageButton = findViewById(R.id.button_Next_Page);
     }
     private void setupButtonClickListener() {
         calculateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-               double bmiResult =  calculateBmi();
+                double bmiResult = calculateBmi();
                 displayResult(bmiResult);
+            }
+
+        });
+        nextPageButton.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"here",Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getApplicationContext(), SportsTracking.class);
+                startActivity(intent);
+                setContentView(R.layout.activity_sports_tracking);
             }
         });
     }
+
 
     private double calculateBmi() {
         String ageText = ageEditText.getText().toString();
