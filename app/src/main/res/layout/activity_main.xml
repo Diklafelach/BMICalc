@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/cardview_light_background"
-    android:gravity="center"
+    android:gravity="center_horizontal"
     android:orientation="vertical">
 
     <TextView
@@ -21,7 +22,7 @@
     <RadioGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         android:orientation="horizontal">
 
         <RadioButton
@@ -44,7 +45,7 @@
         android:id="@+id/edit_text_age"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         android:hint="Age"
         android:inputType="number"
         android:textColor="@color/black"
@@ -53,7 +54,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         android:orientation="horizontal">
 
         <EditText
@@ -82,7 +83,7 @@
         android:id="@+id/button_calculate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_margin="10dp"
         android:text="Calculate" />
 
     <TextView
@@ -101,7 +102,17 @@
         android:id="@+id/button_Next_Page"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:text="next page">
+
+    </Button>
+
+    <Button
+        android:backgroundTint="@android:color/black"        android:id="@+id/button_exit"
+        android:layout_width="75dp"
+        android:layout_height="35dp"
+        android:text="exit"
+        android:textColor="@color/white">
 
     </Button>
 </LinearLayout>

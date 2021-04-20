@@ -7,8 +7,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.text.DecimalFormat;
@@ -24,16 +24,19 @@ public class MainActivity extends AppCompatActivity
     RadioButton femaleButton;
     RadioButton maleButton;
     Button nextPageButton;
+    Button exitButton;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
         findViews();
         setupButtonClickListener();
-
     }
-    
+
+
 
     private  void findViews()
     {
@@ -46,6 +49,7 @@ public class MainActivity extends AppCompatActivity
         femaleButton = findViewById(R.id.radio_button_female);
         maleButton = findViewById(R.id.radio_button_male);
         nextPageButton = findViewById(R.id.button_Next_Page);
+        exitButton=findViewById(R.id.button_exit);
     }
     private void setupButtonClickListener() {
         calculateButton.setOnClickListener(new View.OnClickListener() {
@@ -61,10 +65,17 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"here",Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(getApplicationContext(), SportsTracking.class);
+                Intent intent = new Intent(MainActivity.this, SportsTracking.class);
                 startActivity(intent);
                 setContentView(R.layout.activity_sports_tracking);
+            }
+        });
+        exitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finishAffinity();
+                System.exit(0);
+
             }
         });
     }
@@ -81,6 +92,7 @@ public class MainActivity extends AppCompatActivity
         return weight / (height * height);
 
     }
+
     private void displayResult(double bmi)
     {
         DecimalFormat myDecimalFormat = new DecimalFormat("0.00");
@@ -98,5 +110,6 @@ public class MainActivity extends AppCompatActivity
             fullResultString=bmiTextResult +" "+ "you are on an acute obesity";
         result.setText(fullResultString);
     }
+
 
 }
