@@ -15,7 +15,7 @@ public class SportsTracking extends AppCompatActivity {
     Button stopTimerButton;
     Chronometer timerResult;
     EditText displayTimeResult;
-    long time=0;
+    double time=0;
     boolean running=false;
 
     @Override
@@ -44,7 +44,7 @@ public class SportsTracking extends AppCompatActivity {
             public void onClick(View v) {
                 if(!running)
                 {
-                    timerResult.setBase(SystemClock.elapsedRealtime());
+                   timerResult.setBase(SystemClock.elapsedRealtime());
                     timerResult.start();
                     running=true;
                 }
@@ -57,7 +57,10 @@ public class SportsTracking extends AppCompatActivity {
             public void onClick(View v) {
                 if(running) {
                     timerResult.stop();
-                    time = time + SystemClock.elapsedRealtime() - timerResult.getBase();
+                    long t,g;
+                    t=SystemClock.elapsedRealtime();
+                    g=timerResult.getBase();
+                    time =  time +( t-g)/1000.0;
                     running = false;
                     timerResult.setBase(SystemClock.elapsedRealtime());
                     displayingTimeResult(time);
@@ -65,9 +68,9 @@ public class SportsTracking extends AppCompatActivity {
             }
         });
     }
-    public void displayingTimeResult(long time)
+    public void displayingTimeResult(double time)
     {
-        displayTimeResult.setText("The amount of time I did sports this week is " + time);
+        displayTimeResult.setText("The amount of seconds I did sports this week is " + (int)(time/60));
     }
 
     public void onBackPressed() {
