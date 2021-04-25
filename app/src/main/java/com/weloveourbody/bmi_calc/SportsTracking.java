@@ -1,6 +1,7 @@
 package com.weloveourbody.bmi_calc;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.View;
@@ -15,38 +16,45 @@ public class SportsTracking extends AppCompatActivity {
     Button stopTimerButton;
     Chronometer timerResult;
     EditText displayTimeResult;
-    double time=0;
-    boolean running=false;
+    SharedPreferences pref;
+    SharedPreferences.Editor editor;
+    static double time;
+    boolean running = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sports_tracking);
         findViews();
-        displayTimeResult.setText("The amount of time I did sports this week is 0");
+        setParameters();
         setupButtonClickListener();
-      // ActionBar actionBar = getSupportActionBar();
-       // actionBar.setDisplayHomeAsUpEnabled(true);
-
-
+    }
+    private void findViews() {
+        displayTimeResult = findViewById(R.id.edit_text_Result);
+        timerResult = findViewById(R.id.edit_timer);
+        startTimerButton = findViewById(R.id.button_start);
+        stopTimerButton = findViewById(R.id.button_stop);
     }
 
-    private  void findViews()
-    {
-        displayTimeResult=findViewById(R.id.edit_text_Result);
-        timerResult=findViewById(R.id.edit_timer);
-        startTimerButton=findViewById(R.id.button_start);
-        stopTimerButton=findViewById(R.id.button_stop);
+    private void setParameters() {
+        pref = getSharedPreferences("MyPref", MODE_PRIVATE);
+        if (time == 0.0)
+            time = (double) pref.getFloat(String.valueOf(time), 0);
+        else
+            time = (double) pref.getFloat(String.valueOf(time), (float) time);
+        editor = pref.edit();
+        editor.commit();
+        calcMinSecHour();
     }
+
     private void setupButtonClickListener() {
         startTimerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!running)
-                {
-                   timerResult.setBase(SystemClock.elapsedRealtime());
+                if (!running) {
+                    timerResult.setBase(SystemClock.elapsedRealtime());
                     timerResult.start();
-                    running=true;
+                    running = true;
                 }
 
             }
@@ -55,22 +63,33 @@ public class SportsTracking extends AppCompatActivity {
         stopTimerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(running) {
+                if (running) {
                     timerResult.stop();
-                    long t,g;
-                    t=SystemClock.elapsedRealtime();
-                    g=timerResult.getBase();
-                    time =  time +( t-g)/1000.0;
-                    running = false;
+                    long result = SystemClock.elapsedRealtime() - timerResult.getBase();
+                    time = time + result / 1000.0;
                     timerResult.setBase(SystemClock.elapsedRealtime());
+                    running = false;
                     displayingTimeResult(time);
                 }
             }
         });
     }
-    public void displayingTimeResult(double time)
+
+    public void displayingTimeResult(double time) {
+        time = (double) pref.getFloat(String.valueOf(time), (float) time);
+        editor = pref.edit();
+        editor.commit();
+        calcMinSecHour();
+    }
+
+    private void calcMinSecHour()
     {
-        displayTimeResult.setText("The amount of seconds I did sports this week is " + (int)(time/60));
+        if(time/3600 >=1)
+            displayTimeResult.setText("The amount of time I did sports this week is " + String.format("%.1f", time/3600.0) + " " + "seconds");
+        else if (time / 60 >= 1)
+            displayTimeResult.setText("The amount of time I did sports this week is " + String.format("%.1f", time/60.0) + " " + "seconds");
+        else
+            displayTimeResult.setText("The amount of time I did sports this week is " + String.format("%.0f", time) + " " + "minutes");
     }
 
     public void onBackPressed() {

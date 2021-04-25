@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center">
-
+ 
     <EditText
         android:id="@+id/edit_text_Result"
         android:layout_width="wrap_content"
