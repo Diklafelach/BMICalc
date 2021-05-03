@@ -29,9 +29,6 @@ public class SportsTracking extends AppCompatActivity {
     static double time;
     boolean running = false;
     File fileSharedPrefs;
-    File file;
-    BufferedReader reader;
-    FileWriter writer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +38,7 @@ public class SportsTracking extends AppCompatActivity {
             setParameters();
             setupButtonClickListener();
     }
+
     private void findViews() {
         displayTimeResult = findViewById(R.id.edit_text_Result);
         timerResult = findViewById(R.id.edit_timer);
@@ -51,28 +49,26 @@ public class SportsTracking extends AppCompatActivity {
     private void setParameters() {
         pref = getSharedPreferences("MyPref", MODE_PRIVATE);
         fileSharedPrefs = new File("/data/data/" + getPackageName() +  "/shared_prefs/MyPref.xml" );
-        if(fileSharedPrefs.exists()==true)
+        if(fileSharedPrefs.exists())
         {
 
             // 1-sun 2-mon 3-tues 4-wed 5-thurs 6-fri 7-sat
             String date =  String.valueOf(Calendar.getInstance().get(Calendar.DAY_OF_WEEK));
-            if(date=="7")
+            if(date.equals("7"))
             {
                 WriteToFile(fileSharedPrefs,0.0);
                 displayTimeResult.setText("On Saturday we rest");
-
             }
-            ReadFromFile(fileSharedPrefs);
+            else
+                ReadFromFile(fileSharedPrefs);
         }
         else
         {
             WriteToFile(fileSharedPrefs,0.0);
         }
         editor = pref.edit();
-        editor.commit();
-        calcMinSecHour(time);
-
-
+        editor.apply();
+        calcMinSecHour();
     }
 
 
@@ -90,6 +86,7 @@ public class SportsTracking extends AppCompatActivity {
             }
 
         });
+
         stopTimerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,20 +96,20 @@ public class SportsTracking extends AppCompatActivity {
                     time = time + result / 1000.0;
                     timerResult.setBase(SystemClock.elapsedRealtime());
                     running = false;
-                    displayingTimeResult(time);
+                    updatePrefTime();
+                    calcMinSecHour();
                 }
             }
         });
     }
 
-    public void displayingTimeResult(double time) {
+    public void updatePrefTime() {
         time = (double) pref.getFloat(String.valueOf(time), (float) time);
         editor = pref.edit();
-        boolean flag = editor.commit();
-        calcMinSecHour(time);
+        editor.apply();
     }
 
-    private void calcMinSecHour(double time)
+    private void calcMinSecHour()
     {
         if(time/3600 >=1)
             displayTimeResult.setText("The amount of time I did sports this week is " + String.format("%.1f", time/3600.0) + " " + "hours");
@@ -122,8 +119,10 @@ public class SportsTracking extends AppCompatActivity {
             displayTimeResult.setText("The amount of time I did sports this week is " + String.format("%.0f", time) + " " + "seconds");
         WriteToFile(fileSharedPrefs,time);
     }
+
     private void WriteToFile(File files,double context)
     {
+        FileWriter writer;
         try {
             writer = new FileWriter(files);
             writer.write(String.valueOf(context));
@@ -137,13 +136,16 @@ public class SportsTracking extends AppCompatActivity {
 
     private  void ReadFromFile(File files)
     {
+        BufferedReader reader;
         try {
             reader = new BufferedReader(new FileReader(files));
             String line = String.valueOf(reader.readLine());
             time=Double.parseDouble(line);
-        } catch (FileNotFoundException e) {
+        }
+        catch (FileNotFoundException e) {
             e.printStackTrace();
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             e.printStackTrace();
         }
 

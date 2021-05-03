@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+
                 double bmiResult = calculateBmi();
                 displayResult(bmiResult);
             }
@@ -84,12 +85,10 @@ public class MainActivity extends AppCompatActivity
         String ageText = ageEditText.getText().toString();
         String weightText = weightEditText.getText().toString();
         String heightText = heightEditText.getText().toString();
-
         int age = Integer.parseInt(ageText);
         int weight = Integer.parseInt(weightText);
-        double height = Integer.parseInt(heightText)/100.0;
+        double height = Integer.parseInt(heightText) / 100.0;
         return weight / (height * height);
-
     }
 
     private void displayResult(double bmi)
