@@ -22,6 +22,7 @@ import java.util.Calendar;
 public class SportsTracking extends AppCompatActivity {
     Button startTimerButton;
     Button stopTimerButton;
+    Button resetTimer;
     Chronometer timerResult;
     EditText displayTimeResult;
     SharedPreferences pref;
@@ -44,6 +45,7 @@ public class SportsTracking extends AppCompatActivity {
         timerResult = findViewById(R.id.edit_timer);
         startTimerButton = findViewById(R.id.button_start);
         stopTimerButton = findViewById(R.id.button_stop);
+        resetTimer=findViewById(R.id.button_reset);
     }
 
     private void setParameters() {
@@ -99,6 +101,19 @@ public class SportsTracking extends AppCompatActivity {
                     updatePrefTime();
                     calcMinSecHour();
                 }
+            }
+        });
+
+
+        resetTimer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                timerResult.stop();
+                time = 0;
+                timerResult.setBase(SystemClock.elapsedRealtime());
+                calcMinSecHour();
+                running=false;
+
             }
         });
     }
